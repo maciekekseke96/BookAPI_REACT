@@ -16,8 +16,14 @@ function Book(props) {
       </div>
       <div className="descriptionContainer">
         <h4>{props.book.volumeInfo.title}</h4>
-        {props.book.searchInfo&&<p>{props.book.searchInfo.textSnippet}</p>}
-        {!props.book.searchInfo&&<h3>Description Unknown</h3>}
+        {props.book.searchInfo && (
+          <p
+            dangerouslySetInnerHTML={{
+              __html: props.book.searchInfo.textSnippet,
+            }}
+          ></p>
+        )}
+        {!props.book.searchInfo && <h3>Description Unknown</h3>}
       </div>
     </div>
   );
