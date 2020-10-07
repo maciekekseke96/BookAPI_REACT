@@ -20,7 +20,14 @@ function Header(props) {
           placeholder="Author"
           onChange={(event) => props.setSearchingAuthor(event.target.value)}
         />
-        <button>Search</button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            props.findBooks();
+          }}
+        >
+          Search
+        </button>
       </div>
     </div>
   );

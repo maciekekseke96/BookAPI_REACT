@@ -1,0 +1,9 @@
+@import "./../../../styles/colors";
+@import "./../../../styles/fonts";
+
+.mainContentContainer {
+    min-height: 200px;
+    width: 80%;
+    background-color: $macaron_color;
+    margin-top: 20px;
+}
