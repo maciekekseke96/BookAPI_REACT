@@ -1,13 +1,10 @@
 import React from "react";
 import "./Header.scss";
 
-function Header() {
-
-  return (
-    <div className="app">
-      <h1>New BookAPI Project works ?</h1>
-    </div>
-  );
+function Header(props) {
+  return <div className="headerContainer">
+    <h1>Let's find your books!</h1>
+  </div>;
 }
 
 export default Header;
