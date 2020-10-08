@@ -23,7 +23,11 @@ function Header(props) {
         <button
           onClick={(event) => {
             event.preventDefault();
-            props.findBooks();
+            if (props.searchingAuthor === "" && props.searchingTitle === "") {
+              alert("Please fill at least one search parameter");
+            } else {
+              props.findBooks();
+            }
           }}
         >
           Search
