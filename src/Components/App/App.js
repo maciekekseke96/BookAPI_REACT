@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Header from "./Header/Header";
 import MainContent from "./MainContent/MainContent";
+import LoadingScreen from "./LoadingScreen/LoadingScreen"
 import "./App.scss";
 
 function App() {
-  const APIKey = "AIzaSyCEUjLfNCaKT3fqgq1WeNqxxVwb14bhDLI";
-
   const [booksFound, setBooksFound] = useState(false);
   const [searchingTitle, setSearchingTitle] = useState("");
   const [searchingAuthor, setSearchingAuthor] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [maxResults, setMaxResults] = useState(10);
 
-  const findBooks = () => {
-    setBooksFound(false);
+  const prepareFetchLink = () => {
+    const APIKey = "AIzaSyCEUjLfNCaKT3fqgq1WeNqxxVwb14bhDLI";
     const parametersObject = {
       intitle: searchingTitle,
       inauthor: searchingAuthor,
@@ -27,9 +27,19 @@ function App() {
     }
     fetchingLink += `&maxResults=${maxResults}&key=${APIKey}`;
 
-    fetch(fetchingLink)
+    return fetchingLink;
+  };
+
+  const findBooks = () => {
+    setBooksFound(false);
+    setIsLoading(true)
+    fetch(prepareFetchLink())
       .then((resp) => resp.json())
-      .then((data) => {console.log(data.items);setBooksFound(data.items)});
+      .then((data) => {
+        console.log(data.items);
+        setIsLoading(false)
+        setBooksFound(data.items);
+      });
   };
   return (
     <div className="app">
@@ -41,6 +51,7 @@ function App() {
         setSearchingAuthor={setSearchingAuthor}
       />
       {booksFound && <MainContent books={booksFound} />}
+      {isLoading && <LoadingScreen books={booksFound} />}
     </div>
   );
 }
