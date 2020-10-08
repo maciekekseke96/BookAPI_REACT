@@ -45,6 +45,7 @@ function App() {
     <div className="app">
       <Header
         findBooks={findBooks}
+        setBooksFound={setBooksFound}
         searchingTitle={searchingTitle}
         setSearchingTitle={setSearchingTitle}
         searchingAuthor={searchingAuthor}

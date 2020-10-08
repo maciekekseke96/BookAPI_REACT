@@ -32,6 +32,14 @@ function Header(props) {
         >
           Search
         </button>
+        <button onClick={(event)=> {
+          event.preventDefault();
+          props.setSearchingAuthor("");
+          props.setSearchingTitle("");
+          props.setBooksFound(false);
+        }}>
+          Clear
+        </button>
       </div>
     </div>
   );
