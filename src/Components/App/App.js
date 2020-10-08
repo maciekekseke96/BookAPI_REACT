@@ -13,11 +13,23 @@ function App() {
 
   const findBooks = () => {
     setBooksFound(false);
-    fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=+intitle:${searchingTitle}&maxResults=${maxResults}&key=${APIKey}`
-    )
+    const parametersObject = {
+      intitle: searchingTitle,
+      inauthor: searchingAuthor,
+    };
+    let fetchingLink = `https://www.googleapis.com/books/v1/volumes?q=`;
+
+    for (const parameter in parametersObject) {
+      if (parametersObject[parameter] !== "") {
+        fetchingLink += `+${parameter}:${parametersObject[parameter]}`;
+        console.log(fetchingLink);
+      }
+    }
+    fetchingLink += `&maxResults=${maxResults}&key=${APIKey}`;
+
+    fetch(fetchingLink)
       .then((resp) => resp.json())
-      .then((data) => setBooksFound(data.items));
+      .then((data) => {console.log(data.items);setBooksFound(data.items)});
   };
   return (
     <div className="app">

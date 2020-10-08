@@ -2,13 +2,23 @@ import React from "react";
 import "./Book.scss";
 
 function Book(props) {
-  const imgStyle = {
+  let imgStyle = {
     width: "120px",
     height: "180px",
-    background: `url("${props.book.volumeInfo.imageLinks.smallThumbnail}")`,
-    backgroundSize: "100%",
     backgroundRepeat: "no-repeat",
+    backgroundSize: "100%",
   };
+  if (props.book.volumeInfo.imageLinks) {
+    imgStyle = {
+      ...imgStyle,
+      background: `url("${props.book.volumeInfo.imageLinks.smallThumbnail}")`,
+    };
+  } else {
+    imgStyle = {
+      ...imgStyle,
+      background: "white",
+    };
+  }
   return (
     <div className="book">
       <div className="imgContainer">
