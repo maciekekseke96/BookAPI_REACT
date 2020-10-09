@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import MainContent from "./MainContent/MainContent";
-import LoadingScreen from "./LoadingScreen/LoadingScreen"
+import LoadingScreen from "./LoadingScreen/LoadingScreen";
 import "./App.scss";
 
 function App() {
@@ -10,6 +10,20 @@ function App() {
   const [searchingAuthor, setSearchingAuthor] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [maxResults, setMaxResults] = useState(10);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (maxResults <= 35) {
+        let scrolled = Math.ceil(window.scrollY);
+        let scrollable =
+          document.documentElement.scrollHeight - window.innerHeight;
+
+        if (scrolled === scrollable) {
+          setMaxResults(maxResults + 5);
+        }
+      }
+    });
+  }, [maxResults]);
 
   const prepareFetchLink = () => {
     const APIKey = "AIzaSyCEUjLfNCaKT3fqgq1WeNqxxVwb14bhDLI";
@@ -25,19 +39,20 @@ function App() {
         console.log(fetchingLink);
       }
     }
-    fetchingLink += `&maxResults=${maxResults}&key=${APIKey}`;
+    fetchingLink += `&maxResults=40&key=${APIKey}`;
 
     return fetchingLink;
   };
 
   const findBooks = () => {
+    setMaxResults(10);
     setBooksFound(false);
-    setIsLoading(true)
+    setIsLoading(true);
     fetch(prepareFetchLink())
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data.items);
-        setIsLoading(false)
+        setIsLoading(false);
         setBooksFound(data.items);
       });
   };
@@ -50,8 +65,9 @@ function App() {
         setSearchingTitle={setSearchingTitle}
         searchingAuthor={searchingAuthor}
         setSearchingAuthor={setSearchingAuthor}
+        setMaxResults={setMaxResults}
       />
-      {booksFound && <MainContent books={booksFound} />}
+      {booksFound && <MainContent books={booksFound} maxResults={maxResults} />}
       {isLoading && <LoadingScreen books={booksFound} />}
     </div>
   );

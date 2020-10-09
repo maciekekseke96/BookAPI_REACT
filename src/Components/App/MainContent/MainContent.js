@@ -7,7 +7,9 @@ function MainContent(props) {
     <div className="mainContentContainer">
       <ul>
         {props.books.map((book, index) => {
-          return <Book book={book} key={index} />;
+          if (index < props.maxResults) {
+            return <Book book={book} key={index} />;
+          }
         })}
       </ul>
     </div>
