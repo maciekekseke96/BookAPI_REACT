@@ -20,6 +20,17 @@ function Header(props) {
           placeholder="Author"
           onChange={(event) => props.setSearchingAuthor(event.target.value)}
         />
+        <label> Type </label>
+        <select
+          onChange={(event) => {
+            props.setVolumeType(event.target.value);
+          }}
+          value={props.volumeType}
+        >
+          <option>all</option>
+          <option>books</option>
+          <option>magazines</option>
+        </select>
         <button
           onClick={(event) => {
             event.preventDefault();
@@ -39,6 +50,7 @@ function Header(props) {
             props.setSearchingTitle("");
             props.setBooksFound(false);
             props.setMaxResults(10);
+            props.setVolumeType("all");
           }}
         >
           Clear

@@ -8,6 +8,7 @@ function App() {
   const [booksFound, setBooksFound] = useState(false);
   const [searchingTitle, setSearchingTitle] = useState("");
   const [searchingAuthor, setSearchingAuthor] = useState("");
+  const [volumeType, setVolumeType] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [maxResults, setMaxResults] = useState(10);
 
@@ -36,10 +37,13 @@ function App() {
     for (const parameter in parametersObject) {
       if (parametersObject[parameter] !== "") {
         fetchingLink += `+${parameter}:${parametersObject[parameter]}`;
-        console.log(fetchingLink);
       }
     }
+    if (volumeType !== "all") {
+      fetchingLink += `&printType=${volumeType}`;
+    }
     fetchingLink += `&maxResults=40&key=${APIKey}`;
+    console.log(fetchingLink);
 
     return fetchingLink;
   };
@@ -66,6 +70,8 @@ function App() {
         searchingAuthor={searchingAuthor}
         setSearchingAuthor={setSearchingAuthor}
         setMaxResults={setMaxResults}
+        volumeType={volumeType}
+        setVolumeType={setVolumeType}
       />
       {booksFound && <MainContent books={booksFound} maxResults={maxResults} />}
       {isLoading && <LoadingScreen books={booksFound} />}
